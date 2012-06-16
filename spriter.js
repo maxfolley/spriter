@@ -33,6 +33,7 @@
         if (typeof sprData === "undefined" || typeof sprData.interval === "undefined") {
             return;
         }
+        clearInterval(sprData.interval);
         sprData.interval = undefined;
         el.data("sprData", sprData);
     }
