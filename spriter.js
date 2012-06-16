@@ -40,45 +40,61 @@
         sprData.interval = undefined;
         el.data("sprData", sprData);
     }
-    $.fn.spriter = function (options) {
-        var opts = {
-                fps: 10,
-                autoPlay: false,
-                frames: 2,
-                frameWidth: NaN,
-                useImage: false 
-            },
-            sprData = this.data("sprData") || {},
-            frameW;
+    var methods = {
+        init: function (options) {
+            return this.each(function () {
+                var $this = $(this), 
+                    opts = {
+                        fps: 10,
+                        autoPlay: false,
+                        frames: 2,
+                        frameWidth: NaN,
+                        useImage: false 
+                    },
+                    sprData = $this.data("sprData") || {},
+                    frameW;
 
-        $.extend(opts, options);
-        frameW = opts.frameW || this.width();
-        $.extend(sprData, {
-            rate: Math.round((1 / opts.fps) * 1000),
-            frames: opts.frames,
-            frameW: frameW,
-            css: (opts.useImage === true) ? "left" : "bg-position-x",
-            dir: -1,
-            interval: undefined,
-            img: $(opts.useImage === true) ? $("img", this) : undefined,
-            sceneW: opts.frames * frameW,
-            xpos: 0
-        });
+                $.extend(opts, options);
+                frameW = opts.frameW || $this.width();
+                $.extend(sprData, {
+                    rate: Math.round((1 / opts.fps) * 1000),
+                    frames: opts.frames,
+                    frameW: frameW,
+                    css: (opts.useImage === true) ? "left" : "bg-position-x",
+                    dir: -1,
+                    interval: undefined,
+                    img: $(opts.useImage === true) ? $("img", $this) : undefined,
+                    sceneW: opts.frames * frameW,
+                    xpos: 0
+                });
 
-        this.data("sprData", sprData);
+                $this.data("sprData", sprData);
 
-        if (opts.autoPlay === true) {
-            startSprite(this);
+                if (opts.autoPlay === true) {
+                    startSprite($this);
+                }
+            });
+        },
+        start: function () {
+            return this.each(function () {
+                var $this = $(this);
+                startSprite($this);
+            });
+        },
+        stop: function () {
+            return this.each(function () {
+                var $this = $(this);
+                stopSprite($this);
+            });
         }
-
-        return this;
     };
-    $.fn.startSpriter = function () {
-        startSprite(this);
-        return this;
-    };
-    $.fn.stopSpriter = function () {
-        stopSprite(this);
-        return this;
+    $.fn.spriter = function (method) {
+        if (methods[method]) {
+            return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+        } else if (typeof method === "object" || !method) {
+            return methods.init.apply(this, arguments);
+        } else {
+            $.error('Method ' +  method + ' does not exist on jQuery.spriter');
+        }
     };
 }(jQuery));

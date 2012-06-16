@@ -15,8 +15,8 @@ OR
     $spr.spriter({fps: 12, frames: 3});
 
     // Some later point in your code, start the animation
-    $spr.startSpriter();
+    $spr.spriter("start");
 
     // Some later point, stop the animation
-    $spr.stopSpriter();
+    $spr.spriter("stop");
 
