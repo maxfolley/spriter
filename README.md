@@ -6,7 +6,7 @@ A simple jQuery plugin for animating sprites.
 Usage
 ----
 
-    $("#my-sprite").spriter({fps: 12, frames: 3, autoplay: true});
+    $("#my-sprite").spriter({fps: 12, frames: 3, autoPlay: true});
 
 OR
 
