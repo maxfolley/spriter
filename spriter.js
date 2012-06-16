@@ -1,7 +1,4 @@
 (function($) {
-    var els = $([]),
-        numEls = 0;
-
     function loop(el) {
         var sprData = el.data("sprData"),
             elW = el.width();
