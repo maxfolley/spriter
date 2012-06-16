@@ -1,4 +1,5 @@
-(function($) {
+(function ($) {
+    "use strict";
     function loop(el) {
         var sprData = el.data("sprData"),
             elW = el.width();
@@ -7,23 +8,23 @@
             sprData.xpos = 0;
         } else {
             sprData.xpos -= sprData.frameW;
-        } 
+        }
         el.css("left", sprData.xpos)
-          .data("sprData", sprData);
+            .data("sprData", sprData);
     }
     function startSprite(el) {
-        var sprData = el.data("sprData");
+        var sprData = el.data("sprData"),
+            helper = function (el) {
+                return function () {
+                    loop(el);
+                };
+            };
+
         // Return if already started
         if (typeof sprData === "undefined" || typeof sprData.interval !== "undefined") {
             return;
         }
-        // Maintain scope of el
-        var helper = function (el) {
-            return function () {
-                loop(el);
-            }
-        }
-        sprData.interval = setInterval(helper(el), sprData.rate); 
+        sprData.interval = setInterval(helper(el), sprData.rate);
         el.data("sprData", sprData);
     }
     function stopSprite(el) {
@@ -46,7 +47,7 @@
 
         $.extend(opts, options);
         $.extend(sprData, {
-            rate: Math.round((1/opts.fps) * 1000),
+            rate: Math.round((1 / opts.fps) * 1000),
             frameW: opts.frameWidth || this.parent().width() || 0,
             dir: -1,
             interval: undefined,
@@ -69,4 +70,4 @@
         stopSprite(this);
         return this;
     };
-})(jQuery);
+}(jQuery));
