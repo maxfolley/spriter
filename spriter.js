@@ -1,4 +1,4 @@
-(function($, window) {
+(function($) {
     var els = $([]),
         numEls = 0;
 
