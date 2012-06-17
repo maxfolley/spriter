@@ -5,7 +5,7 @@
         // If past boundary, repeat
         if (sprData.xpos <= -(sprData.sceneW - sprData.frameW)) {
             sprData.count += 1;
-            sprData.xpos = 0;
+            sprData.xpos = sprData.frameW;
             // If done iterating, stop the sprite
             if (sprData.count >= sprData.iterations) {
                 el.data("sprData", sprData);
@@ -34,6 +34,7 @@
         if (typeof sprData === "undefined" || typeof sprData.interval !== "undefined") {
             return;
         }
+        loop(el);
         sprData.interval = setInterval(helper(el), sprData.rate);
         sprData.count = 0;
         el.data("sprData", sprData);
@@ -75,7 +76,7 @@
                     iterations: opts.iterations,
                     img: $(opts.useImage === true) ? $("img", $this) : undefined,
                     sceneW: opts.frames * frameW,
-                    xpos: 0
+                    xpos: frameW
                 });
 
                 $this.data("sprData", sprData);
