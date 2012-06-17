@@ -5,13 +5,13 @@
         // If past boundary, repeat
         if (sprData.xpos <= -(sprData.sceneW - sprData.frameW)) {
             sprData.count += 1;
-            sprData.xpos = sprData.frameW;
             // If done iterating, stop the sprite
             if (sprData.count >= sprData.iterations) {
                 el.data("sprData", sprData);
                 stopSprite(el);
                 return;
             }
+            sprData.xpos = 0;
         } else {
             sprData.xpos -= sprData.frameW;
         }
