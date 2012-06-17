@@ -4,7 +4,14 @@
         var sprData = el.data("sprData");
         // If past boundary, repeat
         if (sprData.xpos <= -(sprData.sceneW - sprData.frameW)) {
+            sprData.count += 1;
             sprData.xpos = 0;
+            // If done iterating, stop the sprite
+            if (sprData.count >= sprData.iterations) {
+                el.data("sprData", sprData);
+                stopSprite(el);
+                return;
+            }
         } else {
             sprData.xpos -= sprData.frameW;
         }
@@ -28,6 +35,7 @@
             return;
         }
         sprData.interval = setInterval(helper(el), sprData.rate);
+        sprData.count = 0;
         el.data("sprData", sprData);
     }
     function stopSprite(el) {
@@ -49,6 +57,7 @@
                         autoPlay: false,
                         frames: 2,
                         frameWidth: NaN,
+                        iterations: "infinite",
                         useImage: false 
                     },
                     sprData = $this.data("sprData") || {},
@@ -63,6 +72,7 @@
                     css: (opts.useImage === true) ? "left" : "bg-position-x",
                     dir: -1,
                     interval: undefined,
+                    iterations: opts.iterations,
                     img: $(opts.useImage === true) ? $("img", $this) : undefined,
                     sceneW: opts.frames * frameW,
                     xpos: 0
