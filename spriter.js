@@ -7,6 +7,7 @@
             sprData.count += 1;
             // If done iterating, stop the sprite
             if (sprData.count >= sprData.iterations) {
+                sprData.xpos = sprData.frameW;
                 el.data("sprData", sprData);
                 stopSprite(el);
                 return;
